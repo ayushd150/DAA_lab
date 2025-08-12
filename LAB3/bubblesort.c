@@ -2,42 +2,46 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main() {
-    int n;
-
-    printf("Enter the size of the array: ");
-    scanf("%d", &n);
-
-    int a[n];
-    srand(time(0)); 
-    printf("Original array:\n");
-    for (int i = 0; i < n; i++) {
-        a[i] = rand() % 100;
-        printf("%d ", a[i]);
-    }
-
-    clock_t start = clock();  // Start time
-
-    // Bubble Sort
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            if (a[j] > a[j + 1]) {
-                int temp = a[j];
-                a[j] = a[j + 1];
-                a[j + 1] = temp;
+void bubbleSort(int arr[], int n){
+    for (int i = 0; i < n - 1; i++){
+        for (int j = 0; j < n - i - 1; j++){
+            if (arr[j] > arr[j + 1]){
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
             }
         }
     }
+}
 
-    clock_t end = clock();  // End time
+void bubbleSortd(int arr[], int n){
+    for (int i = 0; i < n - 1; i++){
+        for (int j = 0; j < n - i - 1; j++){
+            if (arr[j] < arr[j + 1]){
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
 
+int main(){
+    int n = 10000;
+    int arr[n];
+    double d1;
+    clock_t start, end;
 
-    printf("\nSorted array (Bubble Sort):\n");
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
+    for (int i = 0; i < n; i++){
+        arr[i] = rand();
+    }
 
-    double time_taken = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("\nTime taken: %f seconds\n", time_taken);
+    bubbleSortd(arr, n);
 
-    return 0;
+    start = clock();
+    bubbleSort(arr, n);
+    end = clock();
+    d1 = (double)(end - start) / CLOCKS_PER_SEC;
+
+    printf("%f\n", d1);
 }
